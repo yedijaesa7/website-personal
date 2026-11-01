@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Profesional | yedija esa diartha</title>
+    
+    <!-- Google Fonts Inter & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0b0f19',
+                        darkLight: '#111827',
+                        cardBg: 'rgba(17, 24, 39, 0.75)',
+                        accentCyan: '#06b6d4',
+                        accentBlue: '#3b82f6',
+                        accentIndigo: '#6366f1',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-card {
+            background: rgba(17, 24, 39, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.25);
+            transform: translateY(-4px);
+        }
+
+        .glass-nav {
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Glowing Text & Effects */
+        .glow-text-cyan {
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+        }
+        .glow-box-cyan {
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.25);
+        }
+        .glow-box-indigo {
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.25);
+        }
+
+        /* Dynamic Canvas Layer */
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Hide Scrollbar for filter tabs */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-dark text-slate-200 font-sans antialiased overflow-x-hidden selection:bg-cyan-500 selection:text-white">
+
+    <!-- Header / Navigation Bar -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#home" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-accentCyan to-accentIndigo p-[2px] transition-transform duration-300 group-hover:scale-105">
+                    <div class="w-full h-full bg-dark rounded-[10px] flex items-center justify-center font-mono font-bold text-transparent bg-clip-text bg-gradient-to-r from-accentCyan to-accentBlue text-xl">
+                        Dev
+                    </div>
+                </div>
+                <span class="font-bold text-xl tracking-wider text-white font-mono">
+                    PORTO<span class="text-accentCyan">FOLIO</span>
+                </span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <a href="#home" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-accentCyan hover:bg-white/5 transition-all">Beranda</a>
+                <a href="#about" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-accentCyan hover:bg-white/5 transition-all">Tentang</a>
+                <a href="#skills" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-accentCyan hover:bg-white/5 transition-all">Keahlian</a>
+                <a href="#projects" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-accentCyan hover:bg-white/5 transition-all">Proyek</a>
+                <a href="#experience" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-accentCyan hover:bg-white/5 transition-all">Pengalaman</a>
+                <a href="#contact" class="ml-4 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-accentCyan to-accentBlue hover:opacity-90 transition-all shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40">
+                    Hubungi Saya
+                </a>
+            </nav>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-300 hover:bg-white/10 focus:outline-none" aria-label="Toggle Navigation">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-drawer" class="hidden md:hidden fixed inset-x-0 top-20 bg-darkLight/95 backdrop-blur-xl border-b border-white/10 px-6 py-6 transition-all duration-300">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="mobile-nav-link text-lg font-medium text-slate-200 hover:text-accentCyan">Beranda</a>
+                <a href="#about" class="mobile-nav-link text-lg font-medium text-slate-200 hover:text-accentCyan">Tentang Saya</a>
+                <a href="#skills" class="mobile-nav-link text-lg font-medium text-slate-200 hover:text-accentCyan">Keahlian</a>
+                <a href="#projects" class="mobile-nav-link text-lg font-medium text-slate-200 hover:text-accentCyan">Proyek</a>
+                <a href="#experience" class="mobile-nav-link text-lg font-medium text-slate-200 hover:text-accentCyan">Pengalaman</a>
+                <a href="#contact" class="mobile-nav-link text-lg font-medium text-slate-200 hover:text-accentCyan">Kontak</a>
+                <a href="#contact" class="w-full text-center py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-accentCyan to-accentBlue shadow-lg shadow-cyan-500/20">
+                    Hubungi Saya
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen pt-28 pb-16 flex items-center justify-center overflow-hidden">
+        <canvas id="particles-canvas"></canvas>
+        
+        <!-- Ambient Radial Background Gradients -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accentCyan/15 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-10 w-[400px] h-[400px] bg-accentIndigo/15 rounded-full blur-[140px] pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Column: Bio Brief & CTA -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card text-accentCyan text-xs sm:text-sm font-mono border border-accentCyan/30 animate-pulse-slow">
+                        <span class="w-2 h-2 rounded-full bg-accentCyan animate-ping"></span>
+                        Selamat Datang di Portofolio Saya
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-tight">
+                        Halo, Saya <br class="hidden sm:inline"/>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-accentCyan via-accentBlue to-accentIndigo glow-text-cyan">
+                            Yedija Esa Diartha
+                        </span>
+                    </h1>
+
+                    <div class="text-lg sm:text-2xl font-mono text-slate-300 h-10 flex items-center justify-center lg:justify-start">
+                        <span class="text-slate-500 mr-2">&gt;</span>
+                        <span id="typing-text" class="text-accentCyan font-semibold"></span>
+                        <span class="animate-pulse text-accentCyan">|</span>
+                    </div>
+
+                    <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        Pengembang Web Full-Stack, Spesialis Jaringan, dan Analis Sistem Bisnis yang berdedikasi menciptakan solusi digital modern, efisien, bermutu tinggi, dan berdaya saing tinggi.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#projects" class="px-7 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-accentCyan to-accentBlue hover:opacity-90 transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 flex items-center gap-2">
+                            <span>Lihat Proyek</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#contact" class="px-7 py-3.5 rounded-xl font-semibold text-slate-200 glass-card hover:bg-white/10 border border-white/10 hover:border-accentCyan/50 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2">
+                            <span>Hubungi Saya</span>
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
+                    <!-- Social Icons -->
+                    <div class="flex items-center justify-center lg:justify-start gap-4 pt-6 text-slate-400">
+                        <a href="https://github.com" target="_blank" class="p-3 rounded-xl glass-card hover:text-accentCyan hover:border-accentCyan/50 transition-all">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="p-3 rounded-xl glass-card hover:text-accentCyan hover:border-accentCyan/50 transition-all">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="mailto:alex@example.com" class="p-3 rounded-xl glass-card hover:text-accentCyan hover:border-accentCyan/50 transition-all">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://wa.me/6281234567890" target="_blank" class="p-3 rounded-xl glass-card hover:text-accentCyan hover:border-accentCyan/50 transition-all">
+                            <i data-lucide="message-square" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Right Column: Animated Card Display -->
+                <div class="lg:col-span-5 flex justify-center relative">
+                    <div class="relative w-full max-w-md">
+                        <!-- Background Glow behind image card -->
+                        <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-accentCyan to-accentIndigo opacity-40 blur-xl animate-pulse-slow"></div>
+                        
+                        <!-- Main Visual Card -->
+                        <div class="relative glass-card rounded-3xl p-6 border border-white/10 shadow-2xl">
+                            <div class="relative h-80 rounded-2xl overflow-hidden bg-slate-800/80 mb-6 group">
+                                <img src="3.jpg" alt="Yedija Esa Diartha Profile" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x600/1e293b/06b6d4?text=Profile+Photo'">
+                                <div class="absolute inset-0 bg-gradient-to-t from-darkLight via-transparent to-transparent"></div>
+                                <div class="absolute bottom-4 left-4 right-4">
+                                    <span class="px-3 py-1 rounded-full bg-accentCyan/20 backdrop-blur-md text-accentCyan text-xs font-mono border border-accentCyan/30">Available for Hire</span>
+                                </div>
+                            </div>
+
+                            <!-- Dynamic Quick Stats Grid -->
+                            <div class="grid grid-cols-3 gap-3 text-center">
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                                    <div class="text-2xl font-bold text-white font-mono">3+</div>
+                                    <div class="text-[11px] text-slate-400 mt-1">Thn Pengalaman</div>
+                                </div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                                    <div class="text-2xl font-bold text-accentCyan font-mono">20+</div>
+                                    <div class="text-[11px] text-slate-400 mt-1">Proyek Selesai</div>
+                                </div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                                    <div class="text-2xl font-bold text-accentIndigo font-mono">10+</div>
+                                    <div class="text-[11px] text-slate-400 mt-1">Sertifikasi</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-24 relative bg-darkLight/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 gsap-reveal">
+                <h2 class="text-xs font-mono text-accentCyan uppercase tracking-widest mb-2">// Tentang Saya</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">percaya diri dan yakin</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-accentCyan to-accentIndigo mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <!-- Text Intro -->
+                <div class="lg:col-span-6 space-y-6 gsap-reveal">
+                    <h3 class="text-2xl font-bold text-white">
+                        Berkelazzzz
+                    </h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Saya seorang profesional IT berbakat dengan skil dan talenta yang cukup baik.
+                    </p>
+                    <p class="text-slate-400 leading-relaxed">asiap </p>
+
+                    <div class="pt-4 flex flex-wrap gap-4">
+                    </div>
+                </div>
+
+                <!-- Core Values Cards Grid -->
+                <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4 gsap-reveal">
+                    <div class="p-6 rounded-2xl glass-card glass-card-hover">
+                        <div class="w-12 h-12 rounded-xl bg-accentCyan/10 text-accentCyan flex items-center justify-center mb-4">
+                            <i data-lucide="cpu" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Problem Solver</h4>
+                        <p class="text-sm text-slate-400">Mampu menganalisis masalah teknis yang kompleks dan memberikan solusi efisien secara sistematis.</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl glass-card glass-card-hover">
+                        <div class="w-12 h-12 rounded-xl bg-accentBlue/10 text-accentBlue flex items-center justify-center mb-4">
+                            <i data-lucide="code-2" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Clean Code</h4>
+                        <p class="text-sm text-slate-400">Menulis kode terstruktur, modular, terdokumentasi dengan baik, dan mudah dirawat.</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl glass-card glass-card-hover">
+                        <div class="w-12 h-12 rounded-xl bg-accentIndigo/10 text-accentIndigo flex items-center justify-center mb-4">
+                            <i data-lucide="network" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Network Architecture</h4>
+                        <p class="text-sm text-slate-400">Pemahaman mendalam mengenai routing, firewall, VPN, serta keamanan jaringan komputer.</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl glass-card glass-card-hover">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4">
+                            <i data-lucide="line-chart" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Business Driven</h4>
+                        <p class="text-sm text-slate-400">Menghubungkan keahlian IT dengan pencapaian efisiensi operasional & finansial perusahaan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills & Technologies Section -->
+    <section id="skills" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 gsap-reveal">
+                <h2 class="text-xs font-mono text-accentCyan uppercase tracking-widest mb-2">// Keahlian & Teknologi</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Spektrum Keterampilan Teknis</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-accentCyan to-accentIndigo mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Skills Categories Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Web Development Skills -->
+                <div class="p-8 rounded-3xl glass-card glass-card-hover gsap-reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-3 rounded-xl bg-accentCyan/10 text-accentCyan">
+                            <i data-lucide="globe" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Web Development & Backend</h3>
+                    </div>
+
+                    <div class="space-y-5">
+                        <!-- Skill Item -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-slate-200">Full-Stack (HTML, CSS, JS, React, Tailwind)</span>
+                                <span class="text-xs font-mono text-accentCyan">92%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-accentCyan to-accentBlue h-2 rounded-full transition-all duration-1000" style="width: 92%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-slate-200">Backend API (Node.js, Express, PHP, Laravel)</span>
+                                <span class="text-xs font-mono text-accentCyan">88%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-accentCyan to-accentBlue h-2 rounded-full transition-all duration-1000" style="width: 88%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-slate-200">Database (MySQL, PostgreSQL, MongoDB)</span>
+                                <span class="text-xs font-mono text-accentCyan">85%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-accentCyan to-accentBlue h-2 rounded-full transition-all duration-1000" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Networking Skills -->
+                <div class="p-8 rounded-3xl glass-card glass-card-hover gsap-reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-3 rounded-xl bg-accentBlue/10 text-accentBlue">
+                            <i data-lucide="server" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Networking & Infrastructure</h3>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-slate-200">MikroTik RouterOS (Routing, Firewall, Hotspot)</span>
+                                <span class="text-xs font-mono text-accentBlue">90%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-accentBlue to-accentIndigo h-2 rounded-full transition-all duration-1000" style="width: 90%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-slate-200">Cisco Switches & LAN/WAN Topology</span>
+                                <span class="text-xs font-mono text-accentBlue">82%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-accentBlue to-accentIndigo h-2 rounded-full transition-all duration-1000" style="width: 82%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-slate-200">Network Security & VPN Tunnels</span>
+                                <span class="text-xs font-mono text-accentBlue">86%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-accentBlue to-accentIndigo h-2 rounded-full transition-all duration-1000" style="width: 86%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business & Accounting Tech -->
+                <div class="p-8 rounded-3xl glass-card glass-card-hover gsap-reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-3 rounded-xl bg-accentIndigo/10 text-accentIndigo">
+                            <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Finance & Accounting Tech</h3>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-slate-200">Laporan Keuangan & Financial Modeling</span>
+                                <span class="text-xs font-mono text-accentIndigo">88%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-accentIndigo to-pink-500 h-2 rounded-full transition-all duration-1000" style="width: 88%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-slate-200">Software Akuntansi (Accurate, Zahir, MYOB)</span>
+                                <span class="text-xs font-mono text-accentIndigo">95%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-accentIndigo to-pink-500 h-2 rounded-full transition-all duration-1000" style="width: 95%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-slate-200">Microsoft Excel Advanced & Data Analytics</span>
+                                <span class="text-xs font-mono text-accentIndigo">92%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-accentIndigo to-pink-500 h-2 rounded-full transition-all duration-1000" style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools & Others -->
+                <div class="p-8 rounded-3xl glass-card glass-card-hover gsap-reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400">
+                            <i data-lucide="terminal" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Tools & Environment</h3>
+                    </div>
+
+                    <!-- Tech Badge Pills -->
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 text-sm font-mono hover:border-accentCyan transition-colors">Git / GitHub</span>
+                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 text-sm font-mono hover:border-accentCyan transition-colors">Docker Container</span>
+                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 text-sm font-mono hover:border-accentCyan transition-colors">Linux CLI / Ubuntu</span>
+                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 text-sm font-mono hover:border-accentCyan transition-colors">VS Code</span>
+                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 text-sm font-mono hover:border-accentCyan transition-colors">Postman API</span>
+                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 text-sm font-mono hover:border-accentCyan transition-colors">Figma UI/UX</span>
+                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 text-sm font-mono hover:border-accentCyan transition-colors">Winbox MikroTik</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 relative bg-darkLight/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 gsap-reveal">
+                <h2 class="text-xs font-mono text-accentCyan uppercase tracking-widest mb-2">// Pengalaman Proyek</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Karya & Portfolio Terpilih</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-accentCyan to-accentIndigo mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Project Filter Buttons -->
+            <div class="flex items-center justify-center gap-2 sm:gap-4 mb-12 overflow-x-auto no-scrollbar pb-2 gsap-reveal">
+                <button class="filter-btn active px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-accentCyan text-white shadow-lg shadow-cyan-500/20" data-filter="all">
+                    Semua Proyek
+                </button>
+                <button class="filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all text-slate-400 glass-card hover:text-white hover:border-white/20" data-filter="web">
+                    Web Development
+                </button>
+                <button class="filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all text-slate-400 glass-card hover:text-white hover:border-white/20" data-filter="networking">
+                    Jaringan / MikroTik
+                </button>
+                <button class="filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all text-slate-400 glass-card hover:text-white hover:border-white/20" data-filter="finance">
+                    Akuntansi & Bisnis
+                </button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                
+                <!-- Project Card 1: Web -->
+                <div class="project-card glass-card rounded-3xl overflow-hidden border border-white/10 group glass-card-hover" data-category="web">
+                    <div class="relative h-52 overflow-hidden bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?fit=crop&w=800&q=80" alt="Dashboard E-Commerce" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/1e293b/06b6d4?text=E-Commerce+App'">
+                        <div class="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                            <button onclick="openModal('project-1')" class="p-3 rounded-full bg-accentCyan text-white hover:scale-110 transition-transform">
+                                <i data-lucide="eye" class="w-5 h-5"></i>
+                            </button>
+                            <a href="#" class="p-3 rounded-full bg-darkLight text-white hover:scale-110 transition-transform border border-white/10">
+                                <i data-lucide="external-link" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md bg-accentCyan/10 text-accentCyan text-xs font-mono">React</span>
+                            <span class="px-2.5 py-0.5 rounded-md bg-accentBlue/10 text-accentBlue text-xs font-mono">Node.js</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-accentCyan transition-colors">Sistem Manajemen E-Commerce</h3>
+                        <p class="text-slate-400 text-sm line-clamp-2">Platform e-commerce lengkap dengan payment gateway, analitik real-time, dan manajemen stok terintegrasi.</p>
+                        <button onclick="openModal('project-1')" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accentCyan hover:underline">
+                            Detail Proyek <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project Card 2: Networking -->
+                <div class="project-card glass-card rounded-3xl overflow-hidden border border-white/10 group glass-card-hover" data-category="networking">
+                    <div class="relative h-52 overflow-hidden bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?fit=crop&w=800&q=80" alt="MikroTik Infrastructure" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/1e293b/06b6d4?text=Network+Topology'">
+                        <div class="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                            <button onclick="openModal('project-2')" class="p-3 rounded-full bg-accentCyan text-white hover:scale-110 transition-transform">
+                                <i data-lucide="eye" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md bg-accentBlue/10 text-accentBlue text-xs font-mono">MikroTik</span>
+                            <span class="px-2.5 py-0.5 rounded-md bg-purple-500/10 text-purple-400 text-xs font-mono">VPN / OSPF</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-accentCyan transition-colors">Infrastruktur Jaringan Kantor Cabang</h3>
+                        <p class="text-slate-400 text-sm line-clamp-2">Implementasi Multi-WAN Load Balancing, VPN Interconnection Site-to-Site, dan Firewall Security untuk 5 lokasi kantor.</p>
+                        <button onclick="openModal('project-2')" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accentCyan hover:underline">
+                            Detail Proyek <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project Card 3: Finance -->
+                <div class="project-card glass-card rounded-3xl overflow-hidden border border-white/10 group glass-card-hover" data-category="finance">
+                    <div class="relative h-52 overflow-hidden bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?fit=crop&w=800&q=80" alt="Accounting System" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/1e293b/06b6d4?text=Accounting+Software'">
+                        <div class="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                            <button onclick="openModal('project-3')" class="p-3 rounded-full bg-accentCyan text-white hover:scale-110 transition-transform">
+                                <i data-lucide="eye" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 text-xs font-mono">Accurate</span>
+                            <span class="px-2.5 py-0.5 rounded-md bg-accentIndigo/10 text-accentIndigo text-xs font-mono">Excel Analytics</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-accentCyan transition-colors">Otomatisasi Laporan Keuangan</h3>
+                        <p class="text-slate-400 text-sm line-clamp-2">Perancangan sistem audit internal dan otomasi rekonsiliasi bank untuk meningkatkan akurasi laporan keuangan perusahaan hingga 99%.</p>
+                        <button onclick="openModal('project-3')" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accentCyan hover:underline">
+                            Detail Proyek <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience & Education Timeline -->
+    <section id="experience" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 gsap-reveal">
+                <h2 class="text-xs font-mono text-accentCyan uppercase tracking-widest mb-2">// Pengalaman Kerja</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Jejak Karir & Pendidikan</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-accentCyan to-accentIndigo mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Vertical Timeline -->
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Vertical Glow Line -->
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accentCyan via-accentBlue to-accentIndigo -translate-x-1/2"></div>
+
+                <!-- Timeline Item 1 -->
+                <div class="relative flex flex-col md:flex-row items-center mb-12 group gsap-reveal">
+                    <div class="flex md:w-1/2 md:pr-12 justify-end mb-4 md:mb-0 w-full pl-12 md:pl-0">
+                        <div class="p-6 rounded-2xl glass-card glass-card-hover w-full">
+                            <span class="px-3 py-1 rounded-full bg-accentCyan/10 text-accentCyan text-xs font-mono mb-2 inline-block">2022 - Sekarang</span>
+                            <h3 class="text-lg font-bold text-white">IIB Darma Jaya Lampung</h3>
+                            <h4 class="text-sm font-medium text-slate-400 mb-3">Teknik Informatika</h4>
+                            <p class="text-slate-400 text-sm">Mulai mendalami dunia IT dengan belajar syber Security</p>
+                        </div>
+                    </div>
+                    <!-- Node Point -->
+                    <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-dark border-2 border-accentCyan flex items-center justify-center glow-box-cyan z-10">
+                        <div class="w-3 h-3 rounded-full bg-accentCyan"></div>
+                    </div>
+                    <div class="hidden md:block md:w-1/2 md:pl-12"></div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="relative flex flex-col md:flex-row items-center mb-12 group gsap-reveal">
+                    <div class="hidden md:block md:w-1/2 md:pr-12"></div>
+                    <!-- Node Point -->
+                    <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-dark border-2 border-accentBlue flex items-center justify-center glow-box-indigo z-10">
+                        <div class="w-3 h-3 rounded-full bg-accentBlue"></div>
+                    </div>
+                    <div class="flex md:w-1/2 md:pl-12 justify-start w-full pl-12">
+                        <div class="p-6 rounded-2xl glass-card glass-card-hover w-full">
+                            <span class="px-3 py-1 rounded-full bg-accentBlue/10 text-accentBlue text-xs font-mono mb-2 inline-block">2023 - 2026</span>
+                            <h3 class="text-lg font-bold text-white">Sekolah Teknik Menengah</h3>
+                            <h4 class="text-sm font-medium text-slate-400 mb-3">STM 2 MEi Bandar Lampung</h4>
+                            <p class="text-slate-400 text-sm">Mulai masuk dunia IT dan mengambil jurusan Teknik Komputer dan Jaringan</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="relative flex flex-col md:flex-row items-center group gsap-reveal">
+                    <div class="flex md:w-1/2 md:pr-12 justify-end mb-4 md:mb-0 w-full pl-12 md:pl-0">
+                        <div class="p-6 rounded-2xl glass-card glass-card-hover w-full">
+                            <span class="px-3 py-1 rounded-full bg-accentIndigo/10 text-accentIndigo text-xs font-mono mb-2 inline-block">2020-2023</span>
+                            <h3 class="text-lg font-bold text-white">Sekolah Menengah Pertama</h3>
+                            <h4 class="text-sm font-medium text-slate-400 mb-3">SMPN 18 Bandar Lampung</h4>
+                            <p class="text-slate-400 text-sm">Lulus dengan Predikat Baik dan Aktif dalam organisasi .</p>
+                        </div>
+                    </div>
+                    <!-- Node Point -->
+                    <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-dark border-2 border-accentIndigo flex items-center justify-center glow-box-indigo z-10">
+                        <div class="w-3 h-3 rounded-full bg-accentIndigo"></div>
+                    </div>
+                    <div class="hidden md:block md:w-1/2 md:pl-12"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 gsap-reveal">
+                <h2 class="text-xs font-mono text-accentCyan uppercase tracking-widest mb-2">// Kontak</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Mari Berkolaborasi!</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-accentCyan to-accentIndigo mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Direct Contact Details -->
+                <div class="lg:col-span-5 space-y-6 gsap-reveal">
+                    <h3 class="text-2xl font-bold text-white">Punya Proyek Atau Pertanyaan?</h3>
+                    <p class="text-slate-400">
+                        Jangan ragu untuk menghubungi saya melalui formulir ini atau informasi kontak langsung di bawah ini. Saya selalu terbuka untuk diskusi proyek baru maupun konsultasi teknis.
+                    </p>
+
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-center gap-4 p-4 rounded-2xl glass-card">
+                            <div class="p-3 rounded-xl bg-accentCyan/10 text-accentCyan">
+                                <i data-lucide="mail" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-mono text-slate-400">EMAIL</h4>
+                                <a href="mailto:yedijaesa7@gmail.com" class="text-white font-medium hover:text-accentCyan transition-colors">yedijaesa7@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 rounded-2xl glass-card">
+                            <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400">
+                                <i data-lucide="phone" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-mono text-slate-400">WHATSAPP / TELEPON</h4>
+                                <a href="https://wa.me/087797534977" target="_blank" class="text-white font-medium hover:text-emerald-400 transition-colors">087797534977</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 rounded-2xl glass-card">
+                            <div class="p-3 rounded-xl bg-accentIndigo/10 text-accentIndigo">
+                                <i data-lucide="map-pin" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-mono text-slate-400">LOKASI</h4>
+                                <p class="text-white font-medium">Bandar Lampung, Indonesia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Contact Form -->
+                <div class="lg:col-span-7 gsap-reveal">
+                    <form id="contact-form" class="p-8 rounded-3xl glass-card space-y-6 border border-white/10">
+                        <div id="form-alert" class="hidden p-4 rounded-xl text-sm font-medium"></div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-mono text-slate-300 uppercase mb-2">Nama Lengkap *</label>
+                                <input type="text" id="form-name" required placeholder="Yedija Esa" class="w-full px-4 py-3 rounded-xl bg-slate-900/60 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-accentCyan transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-slate-300 uppercase mb-2">Email Anda *</label>
+                                <input type="email" id="form-email" required placeholder="yedijaesa7@gmail.com" class="w-full px-4 py-3 rounded-xl bg-slate-900/60 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-accentCyan transition-colors">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono text-slate-300 uppercase mb-2">Subjek *</label>
+                            <input type="text" id="form-subject" required placeholder="Diskusi Proyek Web / Jaringan" class="w-full px-4 py-3 rounded-xl bg-slate-900/60 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-accentCyan transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono text-slate-300 uppercase mb-2">Pesan Anda *</label>
+                            <textarea id="form-message" rows="5" required placeholder="Tuliskan detail proyek atau pertanyaan Anda di sini..." class="w-full px-4 py-3 rounded-xl bg-slate-900/60 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-accentCyan transition-colors resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-accentCyan via-accentBlue to-accentIndigo hover:opacity-90 transition-all duration-300 shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            <span>Kirim Pesan Sekarang</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-white/10 bg-darkLight">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-sm text-slate-400">
+                &copy; 2026 <span class="text-white font-medium">Yedija Esa DIartha</span>. Hak Cipta Dilindungi Undang-Undang.
+            </div>
+
+            <div class="flex items-center space-x-6 text-sm text-slate-400">
+                <a href="#home" class="hover:text-accentCyan transition-colors">Beranda</a>
+                <a href="#about" class="hover:text-accentCyan transition-colors">Tentang</a>
+                <a href="#projects" class="hover:text-accentCyan transition-colors">Proyek</a>
+                <a href="#contact" class="hover:text-accentCyan transition-colors">Kontak</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back To Top Floating Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 p-3.5 rounded-2xl glass-card text-accentCyan hover:bg-accentCyan hover:text-white transition-all duration-300 opacity-0 pointer-events-none z-40 shadow-xl border border-accentCyan/30" aria-label="Back to Top">
+        <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <!-- Modal Popup for Project Details -->
+    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-card max-w-2xl w-full rounded-3xl p-6 sm:p-8 relative border border-white/20 transform scale-95 transition-transform duration-300" id="modal-content">
+            <button onclick="closeModal()" class="absolute top-6 right-6 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div id="modal-body" class="space-y-4">
+                <!-- Dynamic Content Injected Here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Drawer Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const drawer = document.getElementById('mobile-drawer');
+        menuBtn.addEventListener('click', () => {
+            drawer.classList.toggle('hidden');
+        });
+
+        // Close mobile drawer on clicking links
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                drawer.classList.add('hidden');
+            });
+        });
+
+        // Back To Top Button Handler
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Typing Effect Logic
+        const words = ["Full-Stack Web Developer", "Network Specialist (MikroTik)", "Finance & Accounting Tech"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingSpeed = 100;
+        const typingText = document.getElementById('typing-text');
+
+        function type() {
+            const currentWord = words[wordIndex];
+            if (isDeleting) {
+                typingText.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingText.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                isDeleting = true;
+                setTimeout(type, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                setTimeout(type, 500);
+            } else {
+                setTimeout(type, isDeleting ? typingSpeed / 2 : typingSpeed);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', type);
+
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.color = Math.random() > 0.5 ? 'rgba(6, 182, 212, ' : 'rgba(99, 102, 241, ';
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = this.color + this.alpha + ')';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.floor((canvas.width * canvas.height) / 15000);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Project Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-accentCyan', 'text-white', 'shadow-lg');
+                    b.classList.add('text-slate-400', 'glass-card');
+                });
+                btn.classList.add('active', 'bg-accentCyan', 'text-white', 'shadow-lg');
+                btn.classList.remove('text-slate-400', 'glass-card');
+
+                const filter = btn.getAttribute('data-filter');
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Project Detail Modal Logic
+        const modalData = {
+            'project-1': {
+                title: 'Sistem Manajemen E-Commerce',
+                tech: 'React, Node.js, Express, MongoDB, Tailwind CSS',
+                desc: 'Aplikasi E-Commerce lengkap dengan dasbor analitik real-time, integrasi gateway pembayaran online, fitur manajemen stok barang otomatis, serta laporan penjualan ekspor Excel/PDF.',
+                image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?fit=crop&w=800&q=80'
+            },
+            'project-2': {
+                title: 'Infrastruktur Jaringan MikroTik',
+                tech: 'MikroTik RouterOS, OpenVPN, OSPF, Firewall Filtering',
+                desc: 'Desain dan konfigurasi jaringan terpusat untuk 5 kantor cabang dengan tautan VPN aman, failover otomatis, pemblokiran situs berbahaya, dan pemisahan trafik menggunakan VLAN.',
+                image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?fit=crop&w=800&q=80'
+            },
+            'project-3': {
+                title: 'Otomatisasi Laporan Keuangan',
+                tech: 'Accurate Online, VBA Excel, Financial Analysis',
+                desc: 'Optimasi alur kerja akuntansi perusahaan dengan mengintegrasikan Accurate Online dan templat kustom Excel untuk pemrosesan gaji karyawan, neraca saldo, dan laporan laba rugi.',
+                image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?fit=crop&w=800&q=80'
+            }
+        };
+
+        const modal = document.getElementById('project-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalBody = document.getElementById('modal-body');
+
+        function openModal(id) {
+            const data = modalData[id];
+            if (!data) return;
+
+            modalBody.innerHTML = `
+                <img src="${data.image}" alt="${data.title}" class="w-full h-48 object-cover rounded-2xl mb-4">
+                <h3 class="text-2xl font-bold text-white">${data.title}</h3>
+                <p class="text-xs font-mono text-accentCyan">${data.tech}</p>
+                <p class="text-slate-300 text-sm leading-relaxed">${data.desc}</p>
+                <div class="pt-4 flex gap-3">
+                    <button onclick="closeModal()" class="w-full py-2.5 rounded-xl bg-accentCyan text-white font-medium text-sm">Tutup Preview</button>
+                </div>
+            `;
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+        }
+
+        // Contact Form Interactivity
+        const contactForm = document.getElementById('contact-form');
+        const formAlert = document.getElementById('form-alert');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formAlert.classList.remove('hidden', 'bg-red-500/20', 'text-red-300');
+            formAlert.classList.add('bg-emerald-500/20', 'text-emerald-300', 'border', 'border-emerald-500/30');
+            formAlert.innerHTML = ' Terima kasih! Pesan Anda telah berhasil terkirim. Saya akan segera menghubungi Anda.';
+            
+            contactForm.reset();
+            setTimeout(() => {
+                formAlert.classList.add('hidden');
+            }, 6000);
+        });
+
+        // GSAP Scroll Animations
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('.gsap-reveal').forEach((elem) => {
+            gsap.fromTo(elem, 
+                { opacity: 0, y: 30 }, 
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+    </script>
+</body>
+</html>
